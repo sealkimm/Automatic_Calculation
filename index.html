@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>맥 자동 계산기</title>
+
+		<!-- css -->
+		<link rel="stylesheet" href="./css/style.css" />
+	</head>
+
+	<body>
+		<div class="bg">
+			<div class="calculate-wrap">
+				<h2 class="title">Mac Automatic Calculation</h2>
+				<div class="device-area">
+					<button type="button" class="active">PC</button>
+					<button type="button">Mob</button>
+				</div>
+				<div class="input-area">
+					<div class="input-box">
+						<input type="number" class="num" />
+					</div>
+					<button type="button" class="run-btn" onclick="computeRatio()">Run</button>
+					<button class="reset-btn">
+						<svg width="18" height="18" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+							<g fill="none" fill-rule="evenodd" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
+								<path
+									d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"
+								/>
+								<path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)" />
+							</g>
+						</svg>
+					</button>
+				</div>
+				<div class="result-area">
+					<span class="text">Result :</span>
+					<div class="result-box">
+						<span class="result"></span>
+						<button class="copy-btn">Copy🤩!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- script -->
+		<script>
+			/**
+			 * pc는 1280px 기준, mob는 375px 기준으로 최솟값 구하기
+			 */
+
+			// 상수
+			const PC_BASE = 1280;
+			const MOB_BASE = 750;
+
+			// DOM 요소 참조
+			const deviceButtons = document.querySelectorAll('.device-area button');
+			const numInput = document.querySelector('.input-area .num');
+			const resetButton = document.querySelector('.reset-btn');
+			const resultArea = document.querySelector('.result-area');
+			const resultText = document.querySelector('.result-area .result');
+			const copyButton = document.querySelector('.result-area .copy-btn');
+
+			// 상태 변수
+			let deviceType = 'PC';
+
+			// 초기화 함수
+			const reset = () => {
+				numInput.value = '';
+				resultArea.classList.remove('active');
+				resultText.innerHTML = '';
+			};
+
+			// 결과 계산 함수
+			const computeRatio = () => {
+				console.log('test');
+				const minNum = +numInput.value;
+				const maxNum = minNum * 2;
+
+				const baseValue = deviceType === 'PC' ? PC_BASE * 0.1 : MOB_BASE * 0.01;
+				const calculatedVw = (maxNum / baseValue).toFixed(2);
+
+				resultText.innerHTML = `clamp(${minNum}px, ${calculatedVw}vw, ${maxNum}px)`;
+				resultArea.classList.add('active');
+			};
+
+			// 디바이스 버튼 클릭 이벤트 처리
+			deviceButtons.forEach((button) => {
+				button.addEventListener('click', () => {
+					deviceType = button.innerHTML;
+					reset();
+
+					deviceButtons.forEach((btn) => {
+						btn.classList.remove('active');
+					});
+					button.classList.add('active');
+				});
+			});
+
+			// 초기화 버튼 클릭 이벤트 처리
+			resetButton.addEventListener('click', reset);
+
+			// 텍스트 복사 함수
+			copyButton.addEventListener('click', () => {
+				window.navigator.clipboard.writeText(resultText.innerHTML);
+				copyButton.classList.add('ani');
+				setTimeout(() => {
+					copyButton.classList.remove('ani');
+				}, 500);
+			});
+
+			// 엔터키 입력 시 계산 진행
+			numInput.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') computeRatio();
+			});
+		</script>
+	</body>
+</html>

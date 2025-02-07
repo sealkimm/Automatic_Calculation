@@ -1,0 +1,158 @@
+@keyframes scaleAni {
+	0% {
+		transform: scale(0.8);
+	}
+	60% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.bg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f8f8ff;
+	width: 100vw;
+	height: 100vh;
+}
+.calculate-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	min-width: 450px;
+	padding: 26px 40px;
+	background-color: #fff;
+	border-radius: 16px;
+	.title {
+		text-align: center;
+		font-weight: 700;
+	}
+	.device-area {
+		display: flex;
+		gap: 10px;
+		margin-top: 18px;
+		button {
+			font-size: 16px;
+			color: #111;
+			background-color: #fff;
+			border: 1px solid #dadcf5;
+			padding: 6px 18px;
+			border-radius: 6px;
+			transition: background-color 0.2s;
+			cursor: pointer;
+			&:hover {
+				background-color: rgba(112, 77, 200, 0.2);
+			}
+			&.active {
+				color: #fff;
+				background-color: #7758ce;
+				border: none;
+			}
+		}
+	}
+	.input-area {
+		display: flex;
+		gap: 6px;
+		.input-box {
+			position: relative;
+			width: 100%;
+			.num {
+				width: 100%;
+				font-size: 18px;
+				text-align: right;
+				background-color: #f8f8ff;
+				border: 1px solid #dadcf5;
+				border-radius: 8px;
+				padding: 5px 30px 5px 10px;
+				box-sizing: border-box;
+				&:focus-visible {
+					outline: 1px solid #7758ce;
+				}
+			}
+			&::after {
+				display: block;
+				content: 'px';
+				position: absolute;
+				top: 50%;
+				right: 11px;
+				transform: translateY(-50%);
+				font-size: 18px;
+				font-weight: 500;
+				color: #8f8f8f;
+			}
+		}
+		.run-btn,
+		.reset-btn {
+			color: #fff;
+			font-size: 14px;
+			padding: 4px 12px;
+			border-radius: 6px;
+			background-color: #7758ce;
+			white-space: nowrap;
+			border: none;
+			cursor: pointer;
+		}
+		.reset-btn {
+			padding: 7px 10px 4px;
+		}
+	}
+	.result-area {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 10px;
+		font-size: 16px;
+		.text {
+			border: none;
+			background-color: #fff;
+			color: #ccc;
+			font-weight: 600;
+			transition: color 0.2s;
+		}
+		.result-box {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			overflow: hidden;
+			.result {
+				opacity: 0;
+				transform: translateX(-100px);
+				transition: transform 0.2s, opacity 0.2s;
+			}
+			.copy-btn {
+				visibility: hidden;
+				font-size: 12px;
+				background-color: #eee;
+				border: none;
+				border-radius: 4px;
+				padding: 2px 4px 3px;
+				font-weight: 600;
+				margin-top: -3px;
+				opacity: 0;
+				cursor: pointer;
+				transition: opacity 0.1s;
+				&.ani {
+					animation: scaleAni 1s;
+				}
+			}
+		}
+		&.active {
+			.text {
+				color: #111;
+			}
+			.result-box {
+				.result {
+					opacity: 1;
+					transform: translateX(0);
+				}
+				.copy-btn {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
