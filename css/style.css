@@ -22,6 +22,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+:root {
+  --text-opacity: 1;
+}
+
 @keyframes scaleAni {
   0% {
     transform: scale(0.8);
@@ -33,123 +37,133 @@ input[type=number] {
     transform: scale(1);
   }
 }
-.bg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8f8ff;
-  width: 100vw;
+.container {
+  width: 100%;
   height: 100vh;
-}
-
-.calculate-wrap {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-width: 450px;
-  padding: 26px 40px;
-  background-color: #fff;
-  border-radius: 16px;
+  justify-content: center;
+  align-items: center;
 }
-.calculate-wrap .title {
+.container .title {
   text-align: center;
-  font-weight: 700;
+  color: rgb(126, 34, 206);
+  font-weight: 800;
+  margin-bottom: 1.4rem;
 }
-.calculate-wrap .device-area {
+.container .inner {
+  color: rgb(126, 34, 206);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(216, 180, 254);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: rgb(250, 245, 255);
+}
+.container .inner .tabs {
   display: flex;
-  gap: 10px;
-  margin-top: 18px;
+  text-align: center;
+  border-bottom: 2px solid rgb(216, 180, 254);
+  min-width: 26rem;
 }
-.calculate-wrap .device-area button {
-  font-size: 16px;
-  color: #111;
+.container .inner .tabs button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.6rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.container .inner .tabs button.active {
   background-color: #fff;
-  border: 1px solid #dadcf5;
-  padding: 6px 18px;
-  border-radius: 6px;
-  transition: background-color 0.2s;
+  color: rgb(126, 34, 206);
+  font-weight: 800;
+  border-radius: 0.8rem;
+}
+.container .inner .content {
+  font-size: 1.12rem;
+  padding: 1rem;
+}
+.container .inner .content .input-wrap .device-area {
+  display: flex;
+  gap: 1rem;
+}
+.container .inner .content .input-wrap .device-area .radio-btn {
+  margin-right: 0.4rem;
+}
+.container .inner .content .input-wrap .device-area label {
   cursor: pointer;
 }
-.calculate-wrap .device-area button:hover {
-  background-color: rgba(112, 77, 200, 0.2);
-}
-.calculate-wrap .device-area button.active {
-  color: #fff;
-  background-color: #7758ce;
-  border: none;
-}
-.calculate-wrap .input-area {
-  display: flex;
-  gap: 6px;
-}
-.calculate-wrap .input-area .input-box {
+.container .inner .content .input-wrap .device-area input[type=radio] {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #999;
+  border-radius: 50%;
   position: relative;
-  width: 100%;
 }
-.calculate-wrap .input-area .input-box .num {
-  width: 100%;
-  font-size: 18px;
-  text-align: right;
-  background-color: #f8f8ff;
-  border: 1px solid #dadcf5;
-  border-radius: 8px;
-  padding: 5px 30px 5px 10px;
-  box-sizing: border-box;
-}
-.calculate-wrap .input-area .input-box .num:focus-visible {
-  outline: 1px solid #7758ce;
-}
-.calculate-wrap .input-area .input-box::after {
+.container .inner .content .input-wrap .device-area input[type=radio]:checked:before {
+  content: "";
   display: block;
-  content: "px";
   position: absolute;
   top: 50%;
-  right: 11px;
-  transform: translateY(-50%);
-  font-size: 18px;
-  font-weight: 500;
-  color: #8f8f8f;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: rgb(126, 34, 206);
 }
-.calculate-wrap .input-area .run-btn,
-.calculate-wrap .input-area .reset-btn {
+.container .inner .content .input-wrap .input-area {
+  margin-top: 1.8rem;
+  position: relative;
+}
+.container .inner .content .input-wrap .input-area .input-box {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  text-align: end;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  border-color: #ccc;
+  margin-top: 0.6rem;
+  padding: 0.6rem;
+  padding-right: 2rem;
+}
+.container .inner .content .input-wrap .input-area::after {
+  content: "px";
+  display: block;
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.6rem;
+  color: #888;
+}
+.container .inner .content .input-wrap .button-area {
+  margin-top: 1.2rem;
+  width: 100%;
+  font-size: 1rem;
   color: #fff;
-  font-size: 14px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  background-color: #7758ce;
-  white-space: nowrap;
   border: none;
+  background-color: rgb(126, 34, 206);
+  border-radius: 0.4rem;
+  padding: 0.6rem;
+  font-weight: 800;
   cursor: pointer;
 }
-.calculate-wrap .input-area .reset-btn {
-  padding: 7px 10px 4px;
-}
-.calculate-wrap .result-area {
+.container .inner .content .result-wrap {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  font-size: 16px;
+  gap: 0.6rem;
+  margin-top: 1.8em;
 }
-.calculate-wrap .result-area .text {
-  border: none;
-  background-color: #fff;
-  color: #ccc;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-.calculate-wrap .result-area .result-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-}
-.calculate-wrap .result-area .result-box .result {
+.container .inner .content .result-wrap .result span {
+  display: inline-block;
   opacity: 0;
-  transform: translateX(-100px);
+  transform: translateX(-3rem);
   transition: transform 0.2s, opacity 0.2s;
 }
-.calculate-wrap .result-area .result-box .copy-btn {
+.container .inner .content .result-wrap .copy-btn {
   visibility: hidden;
   font-size: 12px;
   background-color: #eee;
@@ -162,17 +176,19 @@ input[type=number] {
   cursor: pointer;
   transition: opacity 0.1s;
 }
-.calculate-wrap .result-area .result-box .copy-btn.ani {
+.container .inner .content .result-wrap .copy-btn.ani {
   animation: scaleAni 1s;
 }
-.calculate-wrap .result-area.active .text {
-  color: #111;
-}
-.calculate-wrap .result-area.active .result-box .result {
+.container .inner .content .result-wrap.active .result span {
   opacity: 1;
   transform: translateX(0);
 }
-.calculate-wrap .result-area.active .result-box .copy-btn {
+.container .inner .content .result-wrap.active .copy-btn {
   visibility: visible;
   opacity: 1;
+}
+.container .inner .viewport-width {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 1.6rem;
 }
