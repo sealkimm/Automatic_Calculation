@@ -57,11 +57,24 @@
 				});
 
 				updateViewportWidth();
+
+				if (selectedBrand === 'Aveda') {
+					document.documentElement.style.setProperty('--main-color', 'rgb(85, 130, 10)');
+					document.documentElement.style.setProperty('--secondary-color', 'rgb(160, 210, 80)');
+					document.documentElement.style.setProperty('--bg-color', 'rgb(240, 245, 235)');
+				} else {
+					document.documentElement.style.setProperty('--main-color', 'rgb(126, 34, 206)');
+					document.documentElement.style.setProperty('--secondary-color', 'rgb(216 180 254)');
+					document.documentElement.style.setProperty('--bg-color', 'rgb(250, 245, 255)');
+				}
+
+				reset();
 			};
 
 			const selectDeviceType = (selectedType) => {
 				deviceType = selectedType;
 				updateViewportWidth();
+				reset();
 			};
 
 			const updateViewportWidth = () => {
@@ -104,6 +117,15 @@
 						copyButton.classList.remove('ani');
 					}, 500);
 				});
+			};
+
+			const reset = () => {
+				const pxInput = document.querySelector('.content .input-area .input-box');
+				pxInput.value = '';
+				const result = document.querySelector('.content .result span');
+				result.innerHTML = '';
+				const resultWrap = document.querySelector('.content .result-wrap');
+				resultWrap.classList.remove('active');
 			};
 		</script>
 	</body>

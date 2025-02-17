@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PX to VW Calculator</title>
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+		<style>
+			.active-tab {
+				background-color: #4caf50;
+				color: white;
+				box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+			}
+			.inactive-tab {
+				color: #4caf50;
+				background-color: #e8f5e9;
+			}
+			.inactive-tab:hover {
+				background-color: #a5d6a7;
+			}
+			.purple-tab {
+				background-color: #e1bee7;
+				color: #9c27b0;
+			}
+			.purple-tab:hover {
+				background-color: #ce93d8;
+			}
+			.active-purple-tab {
+				background-color: #9c27b0;
+				color: white;
+				box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="w-full max-w-md mx-auto p-4 space-y-6 rounded-lg border-2">
+			<h2 class="text-2xl font-bold text-center mb-4">PX to VW Calculator</h2>
+
+			<div class="tabs mb-6">
+				<div class="grid w-full grid-cols-2 h-16 p-1 bg-gray-100 rounded-lg">
+					<button id="aveda-tab" class="tab-button text-xl font-semibold transition-all bg-lime-500 text-white shadow-md">Aveda</button>
+					<button id="mac-tab" class="tab-button text-xl font-semibold transition-all text-purple-700 hover:bg-purple-100">MAC</button>
+				</div>
+				<div id="device-selector" class="tabs-content">
+					<label class="text-lg">Select Device:</label>
+					<div class="radio-group flex space-x-4 mb-4">
+						<div>
+							<input type="radio" id="pc" name="device" value="PC" checked />
+							<label for="pc" class="text-lg text-lime-700">PC</label>
+						</div>
+						<div>
+							<input type="radio" id="mobile" name="device" value="Mobile" />
+							<label for="mobile" class="text-lg text-lime-700">Mobile</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-y-2">
+				<label for="px-input" class="text-lg">Enter px value:</label>
+				<input id="px-input" type="number" placeholder="Enter px value" class="text-lg focus:ring-lime-500 w-full p-2 border rounded" />
+			</div>
+			<button id="convert-button" class="w-full text-lg py-3 bg-lime-600 hover:bg-lime-700 text-white rounded">Convert</button>
+			<div id="result" class="text-center mt-4">
+				<p class="text-lg font-semibold">Result:</p>
+				<p id="vw-result" class="text-2xl font-bold">0vw</p>
+			</div>
+			<div class="text-sm text-gray-600 mt-2">
+				<p id="viewport-width">Viewport width: 1440px</p>
+			</div>
+		</div>
+
+		<script>
+			const VIEWPORT_WIDTHS = {
+				Aveda: {
+					PC: 1440,
+					Mobile: 375,
+				},
+				MAC: {
+					PC: 1366,
+					Mobile: 390,
+				},
+			};
+
+			let brand = 'Aveda';
+			let deviceType = 'PC';
+			let pxValue = '';
+			let vwResult = '0vw';
+
+			// Tab button event listeners
+			document.getElementById('aveda-tab').addEventListener('click', function () {
+				brand = 'Aveda';
+				updateBrand();
+			});
+
+			document.getElementById('mac-tab').addEventListener('click', function () {
+				brand = 'MAC';
+				updateBrand();
+			});
+
+			// Radio button event listeners for device selection
+			document.querySelectorAll('input[name="device"]').forEach((radio) => {
+				radio.addEventListener('change', function () {
+					deviceType = this.value;
+					updateViewportWidth();
+				});
+			});
+
+			// Convert button event listener
+			document.getElementById('convert-button').addEventListener('click', handleConvert);
+
+			function handleConvert() {
+				pxValue = document.getElementById('px-input').value;
+				const px = parseFloat(pxValue);
+				if (isNaN(px)) {
+					vwResult = 'Invalid input';
+					document.getElementById('vw-result').innerText = vwResult;
+					return;
+				}
+
+				const viewportWidth = VIEWPORT_WIDTHS[brand][deviceType];
+				const vw = (px / viewportWidth) * 100;
+				vwResult = `${vw.toFixed(4)}vw`;
+				document.getElementById('vw-result').innerText = vwResult;
+			}
+
+			function updateBrand() {
+				if (brand === 'Aveda') {
+					document.getElementById('aveda-tab').classList.add('active-tab');
+					document.getElementById('mac-tab').classList.remove('active-tab');
+					document.getElementById('mac-tab').classList.add('inactive-tab');
+				} else {
+					document.getElementById('mac-tab').classList.add('active-purple-tab');
+					document.getElementById('aveda-tab').classList.remove('active-tab');
+					document.getElementById('aveda-tab').classList.add('inactive-tab');
+				}
+				updateViewportWidth();
+			}
+
+			function updateViewportWidth() {
+				const viewportWidth = VIEWPORT_WIDTHS[brand][deviceType];
+				document.getElementById('viewport-width').innerText = `Viewport width: ${viewportWidth}px`;
+			}
+
+			updateBrand();
+		</script>
+	</body>
+</html>

@@ -19,23 +19,25 @@
 	align-items: center;
 	.title {
 		text-align: center;
-		color: rgb(126, 34, 206);
+		color: #111;
 		font-weight: 800;
 		margin-bottom: 1.4rem;
 	}
 	.inner {
-		color: rgb(126, 34, 206);
+		color: var(--main-color);
 		border-width: 2px;
 		border-style: solid;
-		border-color: rgb(216 180 254);
+		border-color: var(--secondary-color);
 		border-radius: 0.5rem;
 		overflow: hidden;
-		background-color: rgb(250 245 255);
+		background-color: var(--bg-color);
+		transition: all 0.2s;
 		.tabs {
 			display: flex;
 			text-align: center;
-			border-bottom: 2px solid rgb(216 180 254);
+			border-bottom: 2px solid var(--secondary-color);
 			min-width: 26rem;
+			transition: border 0.2s;
 			button {
 				width: 100%;
 				font-size: 1.2rem;
@@ -46,7 +48,7 @@
 				transition: all 0.2s;
 				&.active {
 					background-color: #fff;
-					color: rgb(126, 34, 206);
+					color: var(--main-color);
 					font-weight: 800;
 					border-radius: 0.8rem;
 				}
@@ -55,7 +57,6 @@
 		.content {
 			font-size: 1.12rem;
 			padding: 1rem;
-			// background-color: rgb(250 245 255);
 
 			.input-wrap {
 				.device-area {
@@ -85,7 +86,7 @@
 						width: 0.5rem;
 						height: 0.5rem;
 						border-radius: 50%;
-						background-color: rgb(126, 34, 206);
+						background-color: var(--main-color);
 					}
 				}
 				.input-area {
@@ -97,12 +98,14 @@
 						height: 2.5rem;
 						font-size: 1rem;
 						text-align: end;
-						border-width: 1px;
+						border: 1px solid #ccc;
 						border-radius: 0.3rem;
-						border-color: #ccc;
 						margin-top: 0.6rem;
 						padding: 0.6rem;
 						padding-right: 2rem;
+						&:focus-visible {
+							outline-color: var(--main-color);
+						}
 					}
 					&::after {
 						content: 'px';
@@ -119,11 +122,12 @@
 					font-size: 1rem;
 					color: #fff;
 					border: none;
-					background-color: rgb(126, 34, 206);
+					background-color: var(--main-color);
 					border-radius: 0.4rem;
 					padding: 0.6rem;
 					font-weight: 800;
 					cursor: pointer;
+					transition: backgroundColor 0.2s;
 				}
 			}
 			.result-wrap {
@@ -132,6 +136,7 @@
 				margin-top: 1.8em;
 				.result span {
 					display: inline-block;
+					font-weight: 700;
 					opacity: 0;
 					transform: translateX(-3rem);
 					transition: transform 0.2s, opacity 0.2s;
