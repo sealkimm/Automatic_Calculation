@@ -36,7 +36,6 @@ const activateTabButton = (brandName) => {
     btn.classList.remove('active');
 
     if (btn.getAttribute('data-brand') === brandName) {
-      const test = btn.getAttribute('data-brand');
       btn.classList.add('active');
     }
   });
@@ -46,6 +45,12 @@ const activateTabButton = (brandName) => {
 const updateViewportWidth = () => {
   const viewportWidth = document.querySelector('.content .viewport-width .text');
   viewportWidth.innerHTML = VIEWPORT_WIDTH[brand][deviceType];
+};
+
+// deviceType PC로 초기화
+const initializeDeviceType = () => {
+  const pcDeviceRadio = document.querySelector('input[name="device"][value="PC"]');
+  pcDeviceRadio.checked = true;
 };
 
 // px을 vw로 변환
@@ -73,9 +78,11 @@ const convertPxToVw = () => {
 
 const selectBrand = (selectedBrand) => {
   brand = selectedBrand;
+  deviceType = 'PC';
   setBrandColor(brand);
   activateTabButton(brand);
   updateViewportWidth();
+  initializeDeviceType();
   reset();
 };
 
