@@ -23,11 +23,9 @@ const setBrandColor = (brandName) => {
     },
   };
 
-  const { main, secondary, bg } = colors[brandName];
-
-  document.documentElement.style.setProperty('--main-color', main);
-  document.documentElement.style.setProperty('--secondary-color', secondary);
-  document.documentElement.style.setProperty('--bg-color', bg);
+  Object.entries(colors[brandName]).forEach(([key, value]) => {
+    document.documentElement.style.setProperty(`--${key}-color`, value);
+  });
 };
 
 // 탭 버튼 활성화
