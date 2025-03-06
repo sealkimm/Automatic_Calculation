@@ -87,7 +87,6 @@ body {
   background-color: #fff;
   color: var(--main-color);
   font-weight: 800;
-  border-radius: 0.8rem;
 }
 .container .inner .content {
   font-size: 1.12rem;
