@@ -6,6 +6,8 @@ const VIEWPORT_WIDTH = {
 let brand = 'Aveda';
 let deviceType = 'PC';
 
+const pxInput = document.querySelector('.content .input-area .input-box');
+
 // 브랜드 테마 컬러 설정
 const setBrandColor = (brandName) => {
   const colors = {
@@ -50,7 +52,6 @@ const updateViewportWidth = () => {
 
 // px을 vw로 변환
 const convertPxToVw = () => {
-  const pxInput = document.querySelector('.content .input-area .input-box');
   const pxValue = parseFloat(pxInput.value);
 
   const baseWidth = VIEWPORT_WIDTH[brand][deviceType];
@@ -107,10 +108,19 @@ const copyText = (result) => {
 
 // 초기화
 const reset = () => {
-  const pxInput = document.querySelector('.content .input-area .input-box');
   pxInput.value = '';
   const result = document.querySelector('.content .result span');
   result.innerHTML = '';
   const resultWrap = document.querySelector('.content .result-wrap');
   resultWrap.classList.remove('active');
 };
+
+// Enter키 입력 시 계산 진행
+pxInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') convertPxToVw();
+});
+
+// input 클릭 시 초기화
+pxInput.addEventListener('click', () => {
+  pxInput.value = '';
+});
