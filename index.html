@@ -86,18 +86,21 @@
 				const pxInput = document.querySelector('.content .input-area .input-box');
 				const pxValue = parseFloat(pxInput.value);
 
+				const baseWidth = VIEWPORT_WIDTH[brand][deviceType];
+				const result = document.querySelector('.content .result span');
+
 				if (isNaN(pxValue)) {
 					return;
 				}
-
-				const baseWidth = VIEWPORT_WIDTH[brand][deviceType];
-				const multiplier = deviceType === 'PC' ? 0.1 : 0.01;
-
-				const vwValue = ((pxValue * 2) / (baseWidth * multiplier)).toFixed(2);
-
-				const result = document.querySelector('.content .result span');
-
-				result.innerHTML = `clamp(${pxValue}px, ${vwValue}vw, ${pxValue * 2}px)`;
+				if (brand === 'Aveda') {
+					const multiplier = 100;
+					const vwValue = ((pxValue / baseWidth) * multiplier).toFixed(2);
+					result.innerHTML = `clamp(0px, ${vwValue}vw, ${pxValue}px)`;
+				} else {
+					const multiplier = deviceType === 'PC' ? 0.1 : 0.01;
+					const vwValue = ((pxValue * 2) / (baseWidth * multiplier)).toFixed(2);
+					result.innerHTML = `clamp(${pxValue}px, ${vwValue}vw, ${pxValue * 2}px)`;
+				}
 
 				// 결과 영역 active 효과
 				const resultWrap = document.querySelector('.content .result-wrap');
