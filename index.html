@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>PX to VW 변환기</title>
 
-		<!-- css -->
 		<link rel="stylesheet" href="./css/style.css" />
 	</head>
 
@@ -14,8 +13,8 @@
 			<h2 class="title">PX to VW Calculator</h2>
 			<div class="inner">
 				<div class="tabs">
-					<button type="button" onclick='selectBrand("Aveda")' class="active">Aveda</button>
-					<button type="button" onclick='selectBrand("Mac")'>Mac</button>
+					<button type="button" data-brand="Aveda" onclick='selectBrand("Aveda")' class="active">Aveda</button>
+					<button type="button" data-brand="Mac" onclick='selectBrand("Mac")'>Mac</button>
 				</div>
 				<div class="content">
 					<div class="input-wrap">
@@ -39,97 +38,6 @@
 		</div>
 
 		<!-- script -->
-		<script>
-			const VIEWPORT_WIDTH = {
-				Aveda: { PC: 1200, Mobile: 750 },
-				Mac: { PC: 1280, Mobile: 750 },
-			};
-
-			let brand = 'Aveda';
-			let deviceType = 'PC';
-
-			const selectBrand = (selectedBrand) => {
-				brand = selectedBrand;
-				const brandBtn = document.querySelectorAll('.container .tabs button');
-
-				brandBtn.forEach((el) => {
-					el.classList.toggle('active');
-				});
-
-				updateViewportWidth();
-
-				if (selectedBrand === 'Aveda') {
-					document.documentElement.style.setProperty('--main-color', 'rgb(85, 130, 10)');
-					document.documentElement.style.setProperty('--secondary-color', 'rgb(160, 210, 80)');
-					document.documentElement.style.setProperty('--bg-color', 'rgb(240, 245, 235)');
-				} else {
-					document.documentElement.style.setProperty('--main-color', 'rgb(126, 34, 206)');
-					document.documentElement.style.setProperty('--secondary-color', 'rgb(216 180 254)');
-					document.documentElement.style.setProperty('--bg-color', 'rgb(250, 245, 255)');
-				}
-
-				reset();
-			};
-
-			const selectDeviceType = (selectedType) => {
-				deviceType = selectedType;
-				updateViewportWidth();
-				reset();
-			};
-
-			const updateViewportWidth = () => {
-				const viewportWidth = document.querySelector('.content .viewport-width .text');
-				viewportWidth.innerHTML = VIEWPORT_WIDTH[brand][deviceType];
-			};
-
-			const convertPxToVw = () => {
-				const pxInput = document.querySelector('.content .input-area .input-box');
-				const pxValue = parseFloat(pxInput.value);
-
-				const baseWidth = VIEWPORT_WIDTH[brand][deviceType];
-				const result = document.querySelector('.content .result span');
-
-				if (isNaN(pxValue)) {
-					return;
-				}
-				if (brand === 'Aveda') {
-					const multiplier = 100;
-					const vwValue = ((pxValue / baseWidth) * multiplier).toFixed(2);
-					result.innerHTML = `clamp(0px, ${vwValue}vw, ${pxValue}px)`;
-				} else {
-					const multiplier = deviceType === 'PC' ? 0.1 : 0.01;
-					const vwValue = ((pxValue * 2) / (baseWidth * multiplier)).toFixed(2);
-					result.innerHTML = `clamp(${pxValue}px, ${vwValue}vw, ${pxValue * 2}px)`;
-				}
-
-				// 결과 영역 active 효과
-				const resultWrap = document.querySelector('.content .result-wrap');
-				resultWrap.classList.add('active');
-
-				// 복사할 텍스트 전달
-				copyText(result.innerHTML);
-			};
-
-			const copyText = (result) => {
-				const copyButton = document.querySelector('.content .result-wrap .copy-btn');
-
-				copyButton.addEventListener('click', () => {
-					window.navigator.clipboard.writeText(result);
-					copyButton.classList.add('ani');
-					setTimeout(() => {
-						copyButton.classList.remove('ani');
-					}, 500);
-				});
-			};
-
-			const reset = () => {
-				const pxInput = document.querySelector('.content .input-area .input-box');
-				pxInput.value = '';
-				const result = document.querySelector('.content .result span');
-				result.innerHTML = '';
-				const resultWrap = document.querySelector('.content .result-wrap');
-				resultWrap.classList.remove('active');
-			};
-		</script>
+		<script src="/js/script.js"></script>
 	</body>
 </html>
