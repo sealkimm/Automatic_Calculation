@@ -1,5 +1,5 @@
 const VIEWPORT_WIDTH = {
-  Aveda: { PC: 1200, Mobile: 750 },
+  Aveda: { PC: 1200, Wide_PC: 2880, Mobile: 750 },
   Mac: { PC: 1280, Mobile: 750 },
 };
 
@@ -66,6 +66,9 @@ const convertPxToVw = () => {
     const multiplier = 100;
     const vwValue = ((pxValue / baseWidth) * multiplier).toFixed(2);
     result.innerHTML = `clamp(0px, ${vwValue}vw, ${pxValue}px)`;
+    if (deviceType === 'Wide_PC') {
+      result.innerHTML = ` ${vwValue}vw,`;
+    }
   } else {
     const multiplier = deviceType === 'PC' ? 0.1 : 0.01;
     const vwValue = ((pxValue * 2) / (baseWidth * multiplier)).toFixed(2);
@@ -76,11 +79,22 @@ const convertPxToVw = () => {
   copyText(result.innerHTML);
 };
 
+const toggleWidePCRadio = () => {
+  const widePcRadio = document.querySelector('.device-area .wide');
+
+  if (brand === 'Aveda') {
+    widePcRadio.style.display = 'block';
+  } else {
+    widePcRadio.style.display = 'none';
+  }
+};
+
 const selectBrand = (selectedBrand) => {
   brand = selectedBrand;
   deviceType = 'PC';
   setBrandColor(brand);
   activateTabButton(brand);
+  toggleWidePCRadio(brand);
   updateViewportWidth();
   initializeDeviceType();
   reset();
