@@ -67,7 +67,7 @@ const convertPxToVw = () => {
     const vwValue = ((pxValue / baseWidth) * multiplier).toFixed(2);
     result.innerHTML = `clamp(0px, ${vwValue}vw, ${pxValue}px)`;
     if (deviceType === 'Wide_PC') {
-      result.innerHTML = ` ${vwValue}vw,`;
+      result.innerHTML = ` ${vwValue}vw`;
     }
   } else {
     const multiplier = deviceType === 'PC' ? 0.1 : 0.01;
